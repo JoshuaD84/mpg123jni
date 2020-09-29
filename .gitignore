@@ -1,0 +1,8 @@
+*.mp3
+bin
+ant-bin
+Mpg123JNI*.zip
+mpg123jni.dll
+waveform*.*
+*.exp
+*.obj

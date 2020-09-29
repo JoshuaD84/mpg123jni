@@ -1,0 +1,62 @@
+<project name="Mpg123 JNI" default="compile" basedir=".">
+
+	<property name="version" value="0.0.1" />
+	<property name="version-simple" value="0.0.1" />
+	<property name="version-tag" value="${version}" />
+
+	<property name="src" location="src"/>
+	<property name="temp" location="temp" />
+	<property name="build" location="ant-bin" />
+
+	<property name="classJarFile" location="mpg123jni-${version-simple}.jar" />
+	<property name="sourceJarFile" location="mpg123jni-${version-simple}-sources.jar" />
+
+	<buildnumber file="build.num"/>
+
+	<target name="init">
+		<tstamp />
+		<mkdir dir="${build}"/>
+	</target>
+
+	<target name="compile" depends="init" description="compile the source">
+		<javac fork="yes" target="13" source ="13" includeantruntime="false" srcdir="." 
+				destdir="${build}" encoding="utf-8">
+		</javac>
+	</target>
+
+	<target name="class-jar" depends="compile" description="Create the class jar.">
+		<jar destfile="${classJarFile}" basedir="${build}">
+			<manifest>
+				<attribute name="Implementation-Version" value="${version}" />
+				<attribute name="Build-Date" value="${TODAY}" />
+				<attribute name="Build-Number" value="${build.number}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="source-jar" description="Create the source jar.">
+		<jar destfile="${sourceJarFile}" basedir="${src}">
+			<manifest>
+				<attribute name="Implementation-Version" value="${version}" />
+				<attribute name="Build-Date" value="${TODAY}" />
+				<attribute name="Build-Number" value="${build.number}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="distribution" depends="class-jar, source-jar" description="Make a full zip file.">
+		<delete dir="${temp}" />
+		<mkdir dir="${temp}/mpg123jni/" />
+		<copy todir="${temp}/mpg123jni/">
+			<fileset file="mpg123jni.dll" />
+			<fileset file="libmpg123-0.dll" />
+			<fileset file="${classJarFile}" />
+			<fileset file="${sourceJarFile}" />
+		</copy>
+		<zip destfile="Mpg123JNI-${version-simple}.zip" basedir="${temp}" />
+		<delete dir="${temp}" />
+		<delete file="${classJarFile}" />
+		<delete file="${sourceJarFile}" />
+	</target>
+</project>
+

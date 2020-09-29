@@ -1,0 +1,1 @@
+cl.exe /EHsc net_joshuad_mpg123jni_MPG123.cpp -Iinclude -IC:\java\jdk-13.0.1\include -IC:\java\jdk-13.0.1\include\win32 -link lib\libmpg123-0.lib /dll /out:../mpg123jni.dll
