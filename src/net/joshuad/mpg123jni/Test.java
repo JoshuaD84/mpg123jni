@@ -3,7 +3,6 @@ package net.joshuad.mpg123jni;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 //import net.joshuad.waveformjni.HWaveOut;
 //import net.joshuad.waveformjni.WaveHeader;
 
@@ -41,7 +40,7 @@ public class Test {
         System.out.println("Decoded Length: " + decodedLength);
         System.out.println("return Code: " + returnCode);
         
-        if (returnCode == MPG123.NEW_FORMAT) {
+        if (returnCode == MPG123Err.NEW_FORMAT) {
           int[] formatInfo = mpg.getFormat();
           System.out.println(
               "New Format: " + formatInfo[0] + ", " + formatInfo[1] + ", " + formatInfo[2]);
@@ -52,13 +51,13 @@ public class Test {
 //          playBuffer(decodedOutput);
         }
         
-        while (returnCode != MPG123.NEED_MORE) {
+        while (returnCode != MPG123Err.NEED_MORE) {
           returnStatus = mpg.decode(new byte[0], decodedOutput);
           returnCode = returnStatus[0];
           decodedLength = returnStatus[1];
           System.out.println("Decoded Length: " + decodedLength);
           System.out.println("return Code: " + returnCode);
-          if (returnCode == MPG123.ERR) {
+          if (returnCode == MPG123Err.ERR) {
             System.out.println("Error, breaking: " + mpg.getError());
             throw new IOException();
           }

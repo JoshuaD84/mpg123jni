@@ -8,10 +8,11 @@
 	<property name="temp" location="temp" />
 	<property name="build" location="ant-bin" />
 
+	<buildnumber file="build.num"/>
+
 	<property name="classJarFile" location="mpg123jni-${version-simple}.jar" />
 	<property name="sourceJarFile" location="mpg123jni-${version-simple}-sources.jar" />
 
-	<buildnumber file="build.num"/>
 
 	<target name="init">
 		<tstamp />
@@ -53,7 +54,7 @@
 			<fileset file="${classJarFile}" />
 			<fileset file="${sourceJarFile}" />
 		</copy>
-		<zip destfile="Mpg123JNI-${version-simple}.zip" basedir="${temp}" />
+		<zip destfile="Mpg123JNI-${version-simple}-b${build.number}.zip" basedir="${temp}" />
 		<delete dir="${temp}" />
 		<delete file="${classJarFile}" />
 		<delete file="${sourceJarFile}" />
